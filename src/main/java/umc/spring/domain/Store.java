@@ -1,10 +1,14 @@
 package umc.spring.domain;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,11 +30,17 @@ public class Store extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, length = 50)
     private String name;
 
+    @Column(nullable = false, length = 50)
     private String address;
 
     private Float score;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "region_id")
+    private Region region;
 
     @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
     private List<Review> reviewList = new ArrayList<>();

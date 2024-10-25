@@ -1,5 +1,6 @@
 package umc.spring.domain.mapping;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -31,6 +32,7 @@ public class MemberMission extends BaseEntity {
     private Long id;
 
     @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "VARCHAR(15)")
     private MissionStatus status;
 
     @ManyToOne(fetch = FetchType.LAZY)
