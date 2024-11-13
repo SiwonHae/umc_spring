@@ -7,14 +7,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import umc.spring.apiPayload.code.ErrorStatus;
 import umc.spring.apiPayload.exception.handler.FoodCategoryHandler;
-import umc.spring.converter.MemberConverter;
-import umc.spring.converter.MemberPreferConverter;
+import umc.spring.converter.member.MemberConverter;
+import umc.spring.converter.member.MemberPreferConverter;
 import umc.spring.domain.FoodCategory;
 import umc.spring.domain.Member;
 import umc.spring.domain.mapping.MemberPrefer;
 import umc.spring.repository.FoodCategoryRepository.FoodCategoryRepository;
 import umc.spring.repository.MemberRepository.MemberRepository;
-import umc.spring.web.dto.MemberRequestDTO;
+import umc.spring.web.dto.member.MemberRequestDTO;
 
 @Service
 @RequiredArgsConstructor

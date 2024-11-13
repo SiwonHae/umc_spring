@@ -1,4 +1,4 @@
-package umc.spring.converter;
+package umc.spring.converter.member;
 
 import java.util.List;
 import java.util.stream.Collectors;
