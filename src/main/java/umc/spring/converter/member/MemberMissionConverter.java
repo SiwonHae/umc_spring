@@ -38,7 +38,7 @@ public class MemberMissionConverter {
                 .build();
     }
 
-    public static MemberMissionResponseDTO.MissionPreViewDTO memberMissionPreViewDTO(MemberMission memberMission){
+    public static MemberMissionResponseDTO.MissionPreViewDTO memberMissionChallengingPreViewDTO(MemberMission memberMission){
         return MemberMissionResponseDTO.MissionPreViewDTO.builder()
                 .storeName(memberMission.getMission().getStore().getName())
                 .missionSpec(memberMission.getMission().getMissionSpec())
@@ -46,10 +46,29 @@ public class MemberMissionConverter {
                 .status(memberMission.getStatus())
                 .build();
     }
-    public static MemberMissionResponseDTO.MissionPreViewListDTO memberMissionPreViewListDTO(Page<MemberMission> memberMissionList){
+
+    public static MemberMissionResponseDTO.MissionPreViewListDTO memberMissionChallengingPreViewListDTO(Page<MemberMission> memberMissionList){
 
         List<MissionPreViewDTO> memberMissionPreViewDTOList = memberMissionList.stream()
-                .map(MemberMissionConverter::memberMissionPreViewDTO)
+                .filter(memberMission -> memberMission.getStatus() == MissionStatus.CHALLENGING)
+                .map(MemberMissionConverter::memberMissionChallengingPreViewDTO)
+                .collect(Collectors.toList());
+
+        return MemberMissionResponseDTO.MissionPreViewListDTO.builder()
+                .isLast(memberMissionList.isLast())
+                .isFirst(memberMissionList.isFirst())
+                .totalPage(memberMissionList.getTotalPages())
+                .totalElements(memberMissionList.getTotalElements())
+                .listSize(memberMissionPreViewDTOList.size())
+                .memberMissionList(memberMissionPreViewDTOList)
+                .build();
+    }
+
+    public static MemberMissionResponseDTO.MissionPreViewListDTO memberMissionCompletePreViewListDTO(Page<MemberMission> memberMissionList){
+
+        List<MissionPreViewDTO> memberMissionPreViewDTOList = memberMissionList.stream()
+                .filter(memberMission -> memberMission.getStatus() == MissionStatus.COMPLETE)
+                .map(MemberMissionConverter::memberMissionChallengingPreViewDTO)
                 .collect(Collectors.toList());
 
         return MemberMissionResponseDTO.MissionPreViewListDTO.builder()
