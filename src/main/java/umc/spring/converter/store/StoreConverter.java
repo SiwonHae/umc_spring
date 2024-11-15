@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.data.domain.Page;
+import umc.spring.domain.Mission;
 import umc.spring.domain.Region;
 import umc.spring.domain.Review;
 import umc.spring.domain.Store;
@@ -51,6 +52,30 @@ public class StoreConverter {
                 .totalElements(reviewList.getTotalElements())
                 .listSize(reviewPreViewDTOList.size())
                 .reviewList(reviewPreViewDTOList)
+                .build();
+    }
+
+    public static StoreResponseDTO.MissionPreViewDTO missionPreViewDTO(Mission mission){
+        return StoreResponseDTO.MissionPreViewDTO.builder()
+                .storeName(mission.getStore().getName())
+                .missionSpec(mission.getMissionSpec())
+                .reward(mission.getReward())
+                .deadline(mission.getDeadline())
+                .createdAt(mission.getCreatedAt().toLocalDate())
+                .build();
+    }
+    public static StoreResponseDTO.MissionPreViewListDTO missionPreViewListDTO(Page<Mission> missionList){
+
+        List<StoreResponseDTO.MissionPreViewDTO> missionPreViewListDTO = missionList.stream()
+                .map(StoreConverter::missionPreViewDTO).collect(Collectors.toList());
+
+        return StoreResponseDTO.MissionPreViewListDTO.builder()
+                .isLast(missionList.isLast())
+                .isFirst(missionList.isFirst())
+                .totalPage(missionList.getTotalPages())
+                .totalElements(missionList.getTotalElements())
+                .listSize(missionPreViewListDTO.size())
+                .missionList(missionPreViewListDTO)
                 .build();
     }
 }

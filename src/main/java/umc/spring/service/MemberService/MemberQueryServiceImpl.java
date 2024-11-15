@@ -27,8 +27,8 @@ public class MemberQueryServiceImpl implements MemberQueryService {
     public Page<Review> getReviewList(Long memberId, Integer page) {
         Member member = memberRepository.findById(memberId).get();
 
-        if (page == 1) {
-            page = 0;
+        if (page >= 1) {
+            page--;
         }
 
         Page<Review> memberPage = reviewRepository.findAllByMember(member, PageRequest.of(page, 10));
